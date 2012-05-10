@@ -7,6 +7,11 @@ SINGLY_API_BASE = "https://carealot.singly.com"
 enable :sessions
 
 get "/" do
+  if session[:access_token]
+    @profiles = HTTParty.get(profiles_url, {
+                  :query => {:access_token => session[:access_token]}
+                }).parsed_response
+  end
   haml :index
 end
 
@@ -38,6 +43,10 @@ def callback_url
   "http#{"s" if request.secure?}://#{request.host}:#{request.port}/auth/callback"
 end
 
+def profiles_url
+  "#{SINGLY_API_BASE}/profiles"
+end
+
 def token_params(code)
   {
     :client_id => ENV["SINGLY_ID"],
@@ -55,16 +64,27 @@ __END__
 @@layout
 !!!
 %html
-  =yield
+  = yield
 
 @@index
 %h1 Singly OAuth Example
 %h2
-  - if session[:access_token]
+  - if @profiles
     Nice to see you again!
   - else
     Please connect a service
+- if @profiles
+  %p
+    Your Singly ID is
+    = @profiles['id']
+    \.
 %ul
   - %w[facebook twitter].each do |service|
     %li
-      %a(href="/auth/#{service}")= service.capitalize
+      = service.capitalize
+      - if @profiles && @profiles[service]
+        is connected as
+        = @profiles[service]
+      - else
+        is not connected.
+        %a(href="/auth/#{service}") Connect
