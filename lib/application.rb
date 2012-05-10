@@ -25,6 +25,11 @@ get "/auth/:service" do
   redirect auth_url(params[:service])
 end
 
+get "/logout" do
+  session.clear
+  redirect "/"
+end
+
 def auth_params(service)
   {
     :client_id => ENV["SINGLY_ID"],
@@ -76,8 +81,9 @@ __END__
 - if @profiles
   %p
     Your Singly ID is
-    = @profiles['id']
+    = @profiles["id"]
     \.
+    %a(href="/logout") Log out
 %ul
   - %w[facebook twitter].each do |service|
     %li
