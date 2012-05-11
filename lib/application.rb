@@ -2,7 +2,7 @@ require "sinatra"
 require "haml"
 require "httparty"
 
-SINGLY_API_BASE = "https://carealot.singly.com"
+SINGLY_API_BASE = "https://api.singly.com"
 
 enable :sessions
 
@@ -83,9 +83,11 @@ __END__
     Please connect a service
 - if @profiles
   %p
-    Your Singly ID is
+    Your Singly ID is:
     = @profiles["id"]
-    \.
+    %p
+      Your access_token is:
+      %p(style="white-space: nowrap;")= session[:access_token]
     %a(href="/logout") Log out
 %ul
   - %w[facebook twitter].each do |service|
