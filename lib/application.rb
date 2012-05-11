@@ -15,7 +15,7 @@ get "/" do
   haml :index
 end
 
-get "/auth/callback" do
+get "/auth_callback" do
   token = HTTParty.post(token_url, {:body => token_params(params[:code])}).body
   session[:access_token] = JSON.parse(token)["access_token"]
   redirect "/"
@@ -45,7 +45,7 @@ def auth_url(servie)
 end
 
 def callback_url
-  "http#{"s" if request.secure?}://#{request.host}:#{request.port}/auth/callback"
+  "http#{"s" if request.secure?}://#{request.host}:#{request.port}/auth_callback"
 end
 
 def profiles_url
