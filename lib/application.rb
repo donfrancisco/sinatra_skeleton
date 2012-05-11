@@ -1,6 +1,5 @@
 require "sinatra"
 require "httparty"
-require "json"
 
 SINGLY_API_BASE = "https://carealot.singly.com"
 
@@ -16,8 +15,11 @@ get "/" do
 end
 
 get "/auth_callback" do
-  token = HTTParty.post(token_url, {:body => token_params(params[:code])}).body
-  session[:access_token] = JSON.parse(token)["access_token"]
+  data = HTTParty.post(
+    token_url,
+    {:body => token_params(params[:code])}
+  ).parsed_response
+  session[:access_token] = data['access_token']
   redirect "/"
 end
 
