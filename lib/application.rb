@@ -20,6 +20,7 @@ get "/auth_callback" do
     token_url,
     {:body => token_params(params[:code])}
   ).parsed_response
+  puts data.inspect
   session[:access_token] = data['access_token']
   redirect "/"
 end
@@ -66,36 +67,3 @@ end
 def token_url
   "#{SINGLY_API_BASE}/oauth/access_token"
 end
-
-__END__
-
-@@layout
-!!!
-%html
-  = yield
-
-@@index
-%h1 Singly OAuth Example
-%h2
-  - if @profiles
-    Nice to see you again!
-  - else
-    Please connect a service
-- if @profiles
-  %p
-    Your Singly ID is:
-    = @profiles["id"]
-    %p
-      Your access_token is:
-      %p(style="white-space: nowrap;")= session[:access_token]
-    %a(href="/logout") Log out
-%ul
-  - %w[facebook twitter].each do |service|
-    %li
-      = service.capitalize
-      - if @profiles && @profiles[service]
-        is connected as
-        = @profiles[service]
-      - else
-        is not connected.
-        %a(href="/auth/#{service}") Connect
