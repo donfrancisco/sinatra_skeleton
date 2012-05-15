@@ -1,0 +1,27 @@
+<h1>Singly OAuth Example</h1>
+<h2>
+  <% if @profiles %>
+    Nice to see you again!
+  <% else %>
+    Please connect a service
+  <% end %>
+</h2>
+<% if @profiles %>
+  <p>
+    Your Singly ID is <%= @profiles["id"] %>.
+    <a href="/logout">Log out</a>
+  </p>
+<% end %>
+<ul>
+  <% %w[facebook twitter].each do |service| %>
+    <li>
+      <%= service.capitalize %>
+      <% if @profiles && @profiles[service] %>
+        is connected as <%= @profiles[service] %>.
+      <% else %>
+        is not connected.
+        <a href="/auth/<%= service %>">Connect</a>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

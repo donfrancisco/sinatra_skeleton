@@ -1,7 +1,6 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    haml (3.1.5)
     httparty (0.8.3)
       multi_json (~> 1.0)
       multi_xml
@@ -20,6 +19,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  haml
   httparty
   sinatra

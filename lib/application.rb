@@ -1,6 +1,5 @@
 require "rubygems"
 require "sinatra"
-require "haml"
 require "httparty"
 
 SINGLY_API_BASE = "https://api.singly.com"
@@ -13,7 +12,7 @@ get "/" do
                   :query => {:access_token => session[:access_token]}
                 }).parsed_response
   end
-  haml :index
+  erb :index
 end
 
 get "/auth_callback" do
