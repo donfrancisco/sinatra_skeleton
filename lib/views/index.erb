@@ -6,9 +6,10 @@
     Please connect a service
   <% end %>
 </h2>
-<% if @profiles %>
+<% if session[:access_token] %>
   <p>
-    Your Singly ID is <%= @profiles["id"] %>.
+    Your access token is
+    <input type="text" value="<%= session[:access_token] %>" readonly="readonyl" />
     <a href="/logout">Log out</a>
   </p>
 <% end %>
