@@ -1,4 +1,5 @@
 source :rubygems
 
-gem "sinatra"
 gem "httparty"
+gem "omniauth-singly"
+gem "sinatra"

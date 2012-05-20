@@ -20,7 +20,7 @@
         is connected as <%= @profiles[service] %>.
       <% else %>
         is not connected.
-        <a href="/auth/<%= service %>">Connect</a>
+        <a href="/auth/singly?service=<%= service %>">Connect</a>
       <% end %>
     </li>
   <% end %>
