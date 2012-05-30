@@ -9,7 +9,7 @@
 <% if session[:access_token] %>
   <p>
     Your access token is
-    <input type="text" value="<%= session[:access_token] %>" readonly="readonyl" />
+    <input type="text" value="<%= session[:access_token] %>" readonly="readonly" />
     <a href="/logout">Log out</a>
   </p>
 <% end %>
